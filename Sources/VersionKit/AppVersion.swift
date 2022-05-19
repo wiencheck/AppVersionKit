@@ -12,7 +12,8 @@ public struct AppVersion: Codable {
     }
     
     public static var current: Self {
-        guard let rawVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+        let bundle: Bundle = .main
+        guard let rawVersion = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
               let rawBuild = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String,
               let build = Int(rawBuild) else {
             return .init(project: .unknown, build: NSNotFound)
